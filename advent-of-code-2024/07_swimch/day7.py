@@ -1,5 +1,5 @@
 calibrations = []
-with open('test.txt', 'r') as f:
+with open('input.txt', 'r') as f:
     for line in f:
         target, values = line.split(":")
         calibrations.append((int(target), [int(num) for num in values.split()])) # add target and numbers as tuple
@@ -24,11 +24,10 @@ def check_possible2(equation): # recursive, returns results for all possible ope
     if len(equation) == 1: # exit condition
         return [equation[0]]
     else: # else return all possibilities
-        previous = check_possible(equation[:-1]) # iterate backwards to read left to right in calculation
+        previous = check_possible2(equation[:-1]) # iterate backwards to read left to right in calculation
         return ([equation[-1] + prev for prev in previous] +
                 [equation[-1] * prev for prev in previous] +
                 [int(str(prev) + str(equation[-1])) for prev in previous])
-                # Sometimes concatenations don't get added to list, e.g. 7290: 6 8 6 15 (6*8||6*15 missing)
 
 result2 = 0
 for calibration in calibrations:
